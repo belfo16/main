@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-    <title>Meine Webseite</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Shop</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Willkommen auf meiner Webseite!</h1>
-    <p>Dies ist eine einfache Webseite, die auf GitHub Pages gehostet wird.</p>
+    <header>
+        <h1>Mein Online-Shop</h1>
+        <nav>
+            <a href="index.html">Startseite</a>
+            <a href="gallery.html">Galerie</a>
+            <a href="shop.html">Shop</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Produkte</h2>
+        <div class="product">
+            <img src="images/product1.jpg" alt="Produkt 1">
+            <h3>Produkt 1</h3>
+            <p>Beschreibung des Produkts 1.</p>
+            <p>Preis: 10,00 €</p>
+            <button onclick="addToCart('Produkt 1', 10.00)">In den Warenkorb</button>
+        </div>
+        <div class="product">
+            <img src="images/product2.jpg" alt="Produkt 2">
+            <h3>Produkt 2</h3>
+            <p>Beschreibung des Produkts 2.</p>
+            <p>Preis: 20,00 €</p>
+            <button onclick="addToCart('Produkt 2', 20.00)">In den Warenkorb</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Mein Online-Shop</p>
+    </footer>
+    <script src="shop.js"></script>
 </body>
 </html>
