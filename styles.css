@@ -23,13 +23,25 @@ main {
     text-align: center;
 }
 
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.category {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+}
+
 .product {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    margin: 10px;
-    display: inline-block;
-    width: 200px;
+    margin: 10px 0;
 }
 
 .product img {
