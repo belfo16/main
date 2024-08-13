@@ -5,10 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Shop</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Styles für den Warenkorb */
+        .cart {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+        .cart.show {
+            display: block;
+        }
+        .cart-header {
+            font-weight: bold;
+        }
+        .cart-item {
+            margin-bottom: 10px;
+        }
+        .cart-footer {
+            margin-top: 10px;
+            text-align: right;
+        }
+        .cart-toggle {
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Mein Online-Shop</h1>
+        <button class="cart-toggle" onclick="toggleCart()">Warenkorb</button>
+        <div class="cart" id="cart">
+            <div class="cart-header">Warenkorb</div>
+            <div id="cart-items"></div>
+            <div class="cart-footer">
+                <button onclick="checkout()">Zur Kasse</button>
+            </div>
+        </div>
     </header>
     <main>
         <h2>Unsere Kategorien</h2>
@@ -52,7 +97,36 @@
     </main>
     <footer>
         <p>&copy; 2024 Mein Online-Shop</p>
+        <p>Wir machen kein Impressum, um Anonymität zu wahren.</p>
     </footer>
     <script src="shop.js"></script>
+    <script>
+        let cart = [];
+
+        function addToCart(product, price) {
+            cart.push({ product, price });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                cartItems.innerHTML += `<div class="cart-item">${item.product} - ${item.price.toFixed(2)} €</div>`;
+                total += item.price;
+            });
+            cartItems.innerHTML += `<div class="cart-item"><strong>Gesamt: ${total.toFixed(2)} €</strong></div>`;
+        }
+
+        function toggleCart() {
+            const cartDiv = document.getElementById('cart');
+            cartDiv.classList.toggle('show');
+        }
+
+        function checkout() {
+            alert('Zur Kasse gehen wird hier noch nicht unterstützt.');
+        }
+    </script>
 </body>
 </html>
