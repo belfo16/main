@@ -9,27 +9,45 @@
 <body>
     <header>
         <h1>Mein Online-Shop</h1>
-        <nav>
-            <a href="index.html">Startseite</a>
-            <a href="gallery.html">Galerie</a>
-            <a href="shop.html">Shop</a>
-        </nav>
     </header>
     <main>
-        <h2>Produkte</h2>
-        <div class="product">
-            <img src="images/product1.jpg" alt="Produkt 1">
-            <h3>Produkt 1</h3>
-            <p>Beschreibung des Produkts 1.</p>
-            <p>Preis: 10,00 €</p>
-            <button onclick="addToCart('Produkt 1', 10.00)">In den Warenkorb</button>
-        </div>
-        <div class="product">
-            <img src="images/product2.jpg" alt="Produkt 2">
-            <h3>Produkt 2</h3>
-            <p>Beschreibung des Produkts 2.</p>
-            <p>Preis: 20,00 €</p>
-            <button onclick="addToCart('Produkt 2', 20.00)">In den Warenkorb</button>
+        <h2>Unsere Kategorien</h2>
+        <div class="categories">
+            <div class="category">
+                <h3>Porsche</h3>
+                <div class="product">
+                    <img src="images/porsche1.jpg" alt="Porsche Modell 1">
+                    <h4>Model 1</h4>
+                    <p>Beschreibung des Porsche Modells 1.</p>
+                    <p>Preis: 50,00 €</p>
+                    <button onclick="addToCart('Porsche Modell 1', 50.00)">In den Warenkorb</button>
+                </div>
+                <div class="product">
+                    <img src="images/porsche2.jpg" alt="Porsche Modell 2">
+                    <h4>Model 2</h4>
+                    <p>Beschreibung des Porsche Modells 2.</p>
+                    <p>Preis: 70,00 €</p>
+                    <button onclick="addToCart('Porsche Modell 2', 70.00)">In den Warenkorb</button>
+                </div>
+            </div>
+            <div class="category">
+                <h3>Koenigsegg</h3>
+                <div class="product">
+                    <img src="images/koenigsegg1.jpg" alt="Koenigsegg Modell 1">
+                    <h4>Model 1</h4>
+                    <p>Beschreibung des Koenigsegg Modells 1.</p>
+                    <p>Preis: 150,00 €</p>
+                    <button onclick="addToCart('Koenigsegg Modell 1', 150.00)">In den Warenkorb</button>
+                </div>
+                <div class="product">
+                    <img src="images/koenigsegg2.jpg" alt="Koenigsegg Modell 2">
+                    <h4>Model 2</h4>
+                    <p>Beschreibung des Koenigsegg Modells 2.</p>
+                    <p>Preis: 200,00 €</p>
+                    <button onclick="addToCart('Koenigsegg Modell 2', 200.00)">In den Warenkorb</button>
+                </div>
+            </div>
+            <!-- Füge hier weitere Kategorien hinzu -->
         </div>
     </main>
     <footer>
