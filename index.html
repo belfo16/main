@@ -28,7 +28,17 @@
             margin-bottom: 10px;
         }
         .cart-item {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 10px;
+        }
+        .remove-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 2px 5px;
+            border-radius: 3px;
+            cursor: pointer;
         }
         .cart-footer {
             margin-top: 10px;
@@ -114,11 +124,20 @@
             const cartItems = document.getElementById('cart-items');
             cartItems.innerHTML = '';
             let total = 0;
-            cart.forEach(item => {
-                cartItems.innerHTML += `<div class="cart-item">${item.product} - ${item.price.toFixed(2)} €</div>`;
+            cart.forEach((item, index) => {
+                cartItems.innerHTML += `
+                    <div class="cart-item">
+                        ${item.product} - ${item.price.toFixed(2)} €
+                        <button class="remove-btn" onclick="removeFromCart(${index})">-</button>
+                    </div>`;
                 total += item.price;
             });
             cartItems.innerHTML += `<div class="cart-item"><strong>Gesamt: ${total.toFixed(2)} €</strong></div>`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
         }
 
         function toggleCart() {
