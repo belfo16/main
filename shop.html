@@ -20,29 +20,53 @@
         <div class="dropdown">
             <button class="dropbtn">Kategorie</button>
             <div class="dropdown-content">
-                <a href="#">Kategorie 1</a>
-                <a href="#">Kategorie 2</a>
-                <a href="#">Kategorie 3</a>
+                <a href="#" onclick="filterCategory('Kategorie 1')">Kategorie 1</a>
+                <a href="#" onclick="filterCategory('Kategorie 2')">Kategorie 2</a>
+                <a href="#" onclick="filterCategory('Kategorie 3')">Kategorie 3</a>
             </div>
         </div>
-        <section>
-            <article>
-                <h2>Produkt 1</h2>
-                <p>Beschreibung des Produkts 1.</p>
-                <button onclick="addToCart('Produkt 1', 19.99)">In den Warenkorb</button>
-            </article>
-            <article>
-                <h2>Produkt 2</h2>
-                <p>Beschreibung des Produkts 2.</p>
-                <button onclick="addToCart('Produkt 2', 29.99)">In den Warenkorb</button>
-            </article>
-            <!-- Weitere Produkte hier -->
+        <section id="product-list">
+            <!-- Produkte werden hier angezeigt -->
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Ihre Firma</p>
     </footer>
     <script>
+        const products = [
+            { id: 1, name: 'Produkt 1', description: 'Beschreibung des Produkts 1', price: 19.99, category: 'Kategorie 1' },
+            { id: 2, name: 'Produkt 2', description: 'Beschreibung des Produkts 2', price: 29.99, category: 'Kategorie 1' },
+            { id: 3, name: 'Produkt 3', description: 'Beschreibung des Produkts 3', price: 39.99, category: 'Kategorie 2' },
+            { id: 4, name: 'Produkt 4', description: 'Beschreibung des Produkts 4', price: 49.99, category: 'Kategorie 2' },
+            // Weitere Produkte hier
+        ];
+
+        function displayProducts(category) {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+
+            const filteredProducts = category ? products.filter(product => product.category === category) : products;
+
+            if (filteredProducts.length === 0) {
+                productList.innerHTML = '<p>Keine Produkte gefunden.</p>';
+            } else {
+                filteredProducts.forEach(product => {
+                    const productElement = document.createElement('article');
+                    productElement.innerHTML = `
+                        <h2>${product.name}</h2>
+                        <p>${product.description}</p>
+                        <p>Preis: ${product.price.toFixed(2)} €</p>
+                        <button onclick="addToCart('${product.name}', ${product.price})">In den Warenkorb</button>
+                    `;
+                    productList.appendChild(productElement);
+                });
+            }
+        }
+
+        function filterCategory(category) {
+            displayProducts(category);
+        }
+
         function addToCart(productName, productPrice) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             let product = { name: productName, price: productPrice };
@@ -50,6 +74,9 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             alert(productName + " wurde zum Warenkorb hinzugefügt.");
         }
+
+        // Display all products initially
+        displayProducts();
     </script>
 </body>
 </html>
