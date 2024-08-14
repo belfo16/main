@@ -26,11 +26,30 @@
             </div>
         </div>
         <section>
-            <!-- Hier werden die Produkte angezeigt -->
+            <article>
+                <h2>Produkt 1</h2>
+                <p>Beschreibung des Produkts 1.</p>
+                <button onclick="addToCart('Produkt 1', 19.99)">In den Warenkorb</button>
+            </article>
+            <article>
+                <h2>Produkt 2</h2>
+                <p>Beschreibung des Produkts 2.</p>
+                <button onclick="addToCart('Produkt 2', 29.99)">In den Warenkorb</button>
+            </article>
+            <!-- Weitere Produkte hier -->
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Ihre Firma</p>
     </footer>
+    <script>
+        function addToCart(productName, productPrice) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let product = { name: productName, price: productPrice };
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(productName + " wurde zum Warenkorb hinzugefügt.");
+        }
+    </script>
 </body>
 </html>
