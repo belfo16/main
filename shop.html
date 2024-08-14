@@ -3,24 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Shop</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        header nav {
+            display: flex;
+            justify-content: center;
+        }
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+        header nav a:hover {
+            background-color: #555;
+        }
+        .container {
+            padding: 20px;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Mein Online Shop</h1>
         <nav>
             <a href="index.html">Startseite</a>
-            <a href="category1.html">Kategorie 1</a>
-            <a href="product1.html">Produkt 1</a>
+            <a href="shop.html">Shop</a>
+            <a href="warenkorb.html">Warenkorb</a>
+            <a href="ueber-uns.html">Über uns</a>
         </nav>
     </header>
-    <main>
-        <h2>Willkommen in unserem Shop!</h2>
-        <p>Hier findest du unsere Produkte und Angebote.</p>
-    </main>
-    <footer>
-        <p>&copy; 2024 Mein Online Shop</p>
-    </footer>
+
+    <div class="container">
+        <div class="dropdown">
+            <button class="dropbtn">Kategorie</button>
+            <div class="dropdown-content">
+                <a href="category1.html">Kategorie 1</a>
+                <a href="category2.html">Kategorie 2</a>
+                <a href="category3.html">Kategorie 3</a>
+            </div>
+        </div>
+        <h1>Unsere Produkte</h1>
+        <!-- Hier kommen die Produkte rein -->
+    </div>
 </body>
 </html>
