@@ -8,7 +8,6 @@
 </head>
 <body>
     <header>
-        <h1>Warenkorb</h1>
         <nav>
             <a href="index.html">Startseite</a>
             <a href="shop.html">Shop</a>
@@ -17,22 +16,19 @@
         </nav>
     </header>
     <main>
-        <section class="cart">
-            <h2>Ihr Warenkorb</h2>
-            <div class="cart-item">
-                <img src="product1-small.jpg" alt="Produkt 1">
-                <p>Produkt 1</p>
-                <p>Preis: 29,99 €</p>
-                <button class="remove-from-cart">-</button>
-            </div>
-            <!-- Weitere Artikel hier -->
-            <div class="cart-total">
-                <p>Gesamt: 29,99 €</p>
-            </div>
-        </section>
+        <h1>Warenkorb</h1>
+        <div id="cartItems">
+            <p>Der Warenkorb ist leer.</p>
+        </div>
+        <button onclick="clearCart()">Leeren</button>
     </main>
     <footer>
-        <p>&copy; 2024 Mein Online-Shop</p>
+        <p>&copy; 2024 Ihre Firma</p>
     </footer>
+    <script>
+        function clearCart() {
+            document.getElementById('cartItems').innerHTML = '<p>Der Warenkorb ist leer.</p>';
+        }
+    </script>
 </body>
 </html>
