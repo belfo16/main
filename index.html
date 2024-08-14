@@ -3,153 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Shop</title>
+    <title>Über uns</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Styles für den Warenkorb */
-        .cart {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            border: 1px solid #ddd;
-            padding: 10px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            display: none;
-            z-index: 1000;
-            color: #000; /* Schriftfarbe auf Schwarz ändern */
-        }
-        .cart.show {
-            display: block;
-        }
-        .cart-header {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        .remove-btn {
-            background-color: red;
-            color: white;
-            border: none;
-            padding: 2px 5px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .cart-footer {
-            margin-top: 10px;
-            text-align: right;
-        }
-        .cart-toggle {
-            cursor: pointer;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-    </style>
 </head>
 <body>
     <header>
-        <h1>Mein Online-Shop</h1>
-        <button class="cart-toggle" onclick="toggleCart()">Warenkorb</button>
-        <div class="cart" id="cart">
-            <div class="cart-header">Warenkorb</div>
-            <div id="cart-items"></div>
-            <div class="cart-footer">
-                <div id="cart-total">Gesamt: 0,00 €</div>
-                <button onclick="checkout()">Zur Kasse</button>
-            </div>
-        </div>
+        <h1>Über uns</h1>
+        <nav>
+            <a href="index.html">Startseite</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html">Warenkorb</a>
+            <a href="about.html">Über uns</a>
+        </nav>
     </header>
     <main>
-        <h2>Unsere Kategorien</h2>
-        <div class="categories">
-            <div class="category">
-                <h3>Porsche</h3>
-                <div class="product">
-                    <img src="images/porsche1.jpg" alt="Porsche Modell 1">
-                    <h4>Model 1</h4>
-                    <p>Beschreibung des Porsche Modells 1.</p>
-                    <p>Preis: 50,00 €</p>
-                    <button onclick="addToCart('Porsche Modell 1', 50.00)">In den Warenkorb</button>
-                </div>
-                <div class="product">
-                    <img src="images/porsche2.jpg" alt="Porsche Modell 2">
-                    <h4>Model 2</h4>
-                    <p>Beschreibung des Porsche Modells 2.</p>
-                    <p>Preis: 70,00 €</p>
-                    <button onclick="addToCart('Porsche Modell 2', 70.00)">In den Warenkorb</button>
-                </div>
-            </div>
-            <div class="category">
-                <h3>Koenigsegg</h3>
-                <div class="product">
-                    <img src="images/koenigsegg1.jpg" alt="Koenigsegg Modell 1">
-                    <h4>Model 1</h4>
-                    <p>Beschreibung des Koenigsegg Modells 1.</p>
-                    <p>Preis: 150,00 €</p>
-                    <button onclick="addToCart('Koenigsegg Modell 1', 150.00)">In den Warenkorb</button>
-                </div>
-                <div class="product">
-                    <img src="images/koenigsegg2.jpg" alt="Koenigsegg Modell 2">
-                    <h4>Model 2</h4>
-                    <p>Beschreibung des Koenigsegg Modells 2.</p>
-                    <p>Preis: 200,00 €</p>
-                    <button onclick="addToCart('Koenigsegg Modell 2', 200.00)">In den Warenkorb</button>
-                </div>
-            </div>
-            <!-- Füge hier weitere Kategorien hinzu -->
-        </div>
+        <section class="about">
+            <h2>Wer wir sind</h2>
+            <p>Informationen über den Shop und das Team.</p>
+        </section>
     </main>
     <footer>
         <p>&copy; 2024 Mein Online-Shop</p>
-        <p>Wir machen kein Impressum, um Anonymität zu wahren.</p>
     </footer>
-    <script src="shop.js"></script>
-    <script>
-        let cart = [];
-
-        function addToCart(product, price) {
-            cart.push({ product, price });
-            updateCart();
-        }
-
-        function updateCart() {
-            const cartItems = document.getElementById('cart-items');
-            const cartTotal = document.getElementById('cart-total');
-            cartItems.innerHTML = '';
-            let total = 0;
-            cart.forEach((item, index) => {
-                cartItems.innerHTML += `
-                    <div class="cart-item">
-                        ${item.product} - ${item.price.toFixed(2)} €
-                        <button class="remove-btn" onclick="removeFromCart(${index})">-</button>
-                    </div>`;
-                total += item.price;
-            });
-            cartTotal.innerHTML = `Gesamt: ${total.toFixed(2)} €`;
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        function toggleCart() {
-            const cartDiv = document.getElementById('cart');
-            cartDiv.classList.toggle('show');
-        }
-
-        function checkout() {
-            alert('Zur Kasse gehen wird hier noch nicht unterstützt.');
-        }
-    </script>
 </body>
 </html>
