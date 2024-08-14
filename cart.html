@@ -26,9 +26,37 @@
         <p>&copy; 2024 Ihre Firma</p>
     </footer>
     <script>
-        function clearCart() {
-            document.getElementById('cartItems').innerHTML = '<p>Der Warenkorb ist leer.</p>';
+        function updateCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Der Warenkorb ist leer.</p>';
+            } else {
+                let total = 0;
+                cart.forEach(item => {
+                    total += item.price;
+                    let itemElement = document.createElement('div');
+                    itemElement.innerHTML = `${item.name} - ${item.price.toFixed(2)} € <button onclick="removeItem('${item.name}')">-</button>`;
+                    cartItems.appendChild(itemElement);
+                });
+                cartItems.innerHTML += `<p>Gesamt: ${total.toFixed(2)} €</p>`;
+            }
         }
+
+        function clearCart() {
+            localStorage.removeItem('cart');
+            updateCart();
+        }
+
+        function removeItem(name) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.name !== name);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        updateCart();
     </script>
 </body>
 </html>
