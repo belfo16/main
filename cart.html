@@ -34,10 +34,12 @@
                 cartItems.innerHTML = '<p>Der Warenkorb ist leer.</p>';
             } else {
                 let total = 0;
-                cart.forEach(item => {
+                cart.forEach((item, index) => {
                     total += item.price;
                     let itemElement = document.createElement('div');
-                    itemElement.innerHTML = `${item.name} - ${item.price.toFixed(2)} € <button onclick="removeItem('${item.name}')">-</button>`;
+                    itemElement.innerHTML = `
+                        ${item.name} - ${item.price.toFixed(2)} € 
+                        <button onclick="removeItem(${index})" style="color: red;">-</button>`;
                     cartItems.appendChild(itemElement);
                 });
                 cartItems.innerHTML += `<p>Gesamt: ${total.toFixed(2)} €</p>`;
@@ -49,9 +51,9 @@
             updateCart();
         }
 
-        function removeItem(name) {
+        function removeItem(index) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart = cart.filter(item => item.name !== name);
+            cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCart();
         }
