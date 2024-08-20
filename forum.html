@@ -1,0 +1,46 @@
+<!-- forum.html -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="forum.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Startseite</a>
+            <a href="forum.html">Forum</a>
+            <a href="about.html">Über uns</a>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Forum</h1>
+
+        <div class="forum-category">
+            <h2>Kategorie 1</h2>
+            <ul id="posts-list">
+                <!-- Beiträge werden hier angezeigt -->
+            </ul>
+        </div>
+
+        <h2>Neuen Beitrag erstellen</h2>
+        <form id="post-form">
+            <label for="post-title">Titel:</label>
+            <input type="text" id="post-title" required>
+            <br>
+            <label for="post-content">Inhalt:</label>
+            <textarea id="post-content" rows="5" required></textarea>
+            <br>
+            <button type="submit">Beitrag posten</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Dein Forum. Alle Rechte vorbehalten.</p>
+    </footer>
+</body>
+</html>
