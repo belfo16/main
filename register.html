@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <!-- Firebase App (Brauche nur einmal importieren) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js"></script>
     <script>
+        // Deine Firebase-Konfiguration
         const firebaseConfig = {
             apiKey: "AIzaSyC61-c9zrpCTZnERdS8P5BKbV8ghr88BoQ",
             authDomain: "forum-465da.firebaseapp.com",
@@ -15,7 +17,11 @@
             messagingSenderId: "331107918743",
             appId: "1:331107918743:web:5680151d1b0a2eb241dad2"
         };
+
+        // Initialisiere Firebase
         firebase.initializeApp(firebaseConfig);
+
+        // Firebase Auth
         const auth = firebase.auth();
 
         function register() {
