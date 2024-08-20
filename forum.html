@@ -4,61 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum</title>
-    <!-- Firebase App (Brauche nur einmal importieren) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-        }
-        .post-form {
-            margin-bottom: 20px;
-        }
-        .post-form input, .post-form button {
-            padding: 10px;
-            margin: 5px 0;
-            width: 100%;
-        }
-        .posts {
-            list-style: none;
-            padding: 0;
-        }
-        .post {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .post h3 {
-            margin: 0 0 10px;
-        }
-        .post p {
-            margin: 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Forum</h1>
-        <div class="post-form">
-            <input type="text" id="postTitle" placeholder="Titel des Beitrags" />
-            <textarea id="postContent" rows="4" placeholder="Inhalt des Beitrags"></textarea>
-            <button onclick="addPost()">Beitrag hinzufügen</button>
-        </div>
-        <ul class="posts" id="postsList"></ul>
-    </div>
-
     <script>
         // Deine Firebase-Konfiguration
         const firebaseConfig = {
@@ -69,56 +17,75 @@
             messagingSenderId: "331107918743",
             appId: "1:331107918743:web:5680151d1b0a2eb241dad2"
         };
-
         // Initialisiere Firebase
         firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Funktion zum Hinzufügen eines Beitrags
-        function addPost() {
-            const title = document.getElementById('postTitle').value;
-            const content = document.getElementById('postContent').value;
-
-            if (title.trim() === '' || content.trim() === '') {
-                alert('Bitte fülle alle Felder aus.');
-                return;
-            }
-
-            db.collection('posts').add({
-                title: title,
-                content: content,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                document.getElementById('postTitle').value = '';
-                document.getElementById('postContent').value = '';
-                loadPosts();
-            }).catch(error => {
-                console.error('Fehler beim Hinzufügen des Beitrags:', error);
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    document.getElementById('user-info').innerText = `Angemeldet als: ${user.email}`;
+                    document.getElementById('post-form').style.display = 'block';
+                    loadPosts();
+                } else {
+                    document.getElementById('user-info').innerText = 'Nicht angemeldet';
+                    document.getElementById('post-form').style.display = 'none';
+                }
             });
-        }
+        });
 
-        // Funktion zum Laden der Beiträge
-        function loadPosts() {
-            db.collection('posts').orderBy('timestamp', 'desc').get().then(querySnapshot => {
-                const postsList = document.getElementById('postsList');
-                postsList.innerHTML = '';
-                querySnapshot.forEach(doc => {
-                    const data = doc.data();
-                    const li = document.createElement('li');
-                    li.className = 'post';
-                    li.innerHTML = `
-                        <h3>${data.title}</h3>
-                        <p>${data.content}</p>
-                    `;
-                    postsList.appendChild(li);
+        function postMessage() {
+            const message = document.getElementById('message').value;
+            const user = auth.currentUser;
+            if (user) {
+                db.collection('posts').add({
+                    message: message,
+                    user: user.email,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    document.getElementById('message').value = '';
+                    loadPosts();
+                }).catch(error => {
+                    alert('Fehler beim Posten: ' + error.message);
                 });
-            }).catch(error => {
-                console.error('Fehler beim Laden der Beiträge:', error);
+            } else {
+                alert('Bitte anmelden, um Beiträge zu erstellen.');
+            }
+        }
+
+        function loadPosts() {
+            db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+                const postsContainer = document.getElementById('posts');
+                postsContainer.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const post = doc.data();
+                    postsContainer.innerHTML += `<div>
+                        <p>${post.message}</p>
+                        <small>Von: ${post.user}</small>
+                    </div>`;
+                });
             });
         }
 
-        // Initiales Laden der Beiträge
-        loadPosts();
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html'; // Weiterleitung zur Anmeldung nach Abmeldung
+            });
+        }
     </script>
+</head>
+<body>
+    <h1>Forum</h1>
+    <div id="user-info">Nicht angemeldet</div>
+    <button onclick="logout()">Abmelden</button>
+    <div id="post-form" style="display: none;">
+        <textarea id="message" placeholder="Deine Nachricht..."></textarea>
+        <button onclick="postMessage()">Posten</button>
+    </div>
+    <div id="posts">
+        <!-- Beiträge werden hier geladen -->
+    </div>
+    <a href="login.html">Zurück zur Anmeldung</a>
 </body>
 </html>
