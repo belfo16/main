@@ -4,86 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum</title>
+    <!-- Firebase App (nur einmal nötig) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+        // Firebase-Konfiguration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC61-c9zrpCTZnERdS8P5BKbV8ghr88BoQ",
+            authDomain: "forum-465da.firebaseapp.com",
+            projectId: "forum-465da",
+            storageBucket: "forum-465da.appspot.com",
+            messagingSenderId: "331107918743",
+            appId: "1:331107918743:web:5680151d1b0a2eb241dad2"
+        };
+
+        // Firebase initialisieren
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
 </head>
 <body>
     <h1>Forum</h1>
 
     <form id="postForm">
         <input type="text" id="postTitle" placeholder="Titel" required>
-        <textarea id="postContent" placeholder="Dein Beitrag" required></textarea>
+        <textarea id="postContent" placeholder="Inhalt" required></textarea>
         <button type="submit">Posten</button>
     </form>
 
     <div id="postsContainer"></div>
 
-    <!-- Firebase App (Einmalig einbinden) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
-
-<script type="module">
-    // Firebase-Konfiguration und Initialisierung
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyC61-c9zrpCTZnERdS8P5BKbV8ghr88BoQ",
-        authDomain: "forum-465da.firebaseapp.com",
-        projectId: "forum-465da",
-        storageBucket: "forum-465da.appspot.com",
-        messagingSenderId: "331107918743",
-        appId: "1:331107918743:web:5680151d1b0a2eb241dad2"
-    };
-
-    // Firebase initialisieren
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Beitrag hinzufügen
-    async function addPost(title, content) {
-        try {
-            await addDoc(collection(db, "posts"), {
-                title: title,
-                content: content,
-                timestamp: serverTimestamp()
-            });
-            console.log("Beitrag erfolgreich hinzugefügt!");
-            loadPosts(); // Beiträge neu laden
-        } catch (error) {
-            console.error("Fehler beim Hinzufügen des Beitrags:", error);
+    <script>
+        // Beitrag hinzufügen
+        async function addPost(title, content) {
+            try {
+                await db.collection("posts").add({
+                    title: title,
+                    content: content,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                console.log("Beitrag erfolgreich hinzugefügt!");
+                loadPosts(); // Beiträge neu laden
+            } catch (error) {
+                console.error("Fehler beim Hinzufügen des Beitrags:", error);
+            }
         }
-    }
 
-    // Beiträge laden
-    async function loadPosts() {
-        try {
-            const querySnapshot = await getDocs(collection(db, "posts"));
-            const postsContainer = document.getElementById("postsContainer");
-            postsContainer.innerHTML = "";
-            querySnapshot.forEach(doc => {
-                const post = doc.data();
-                const postElement = document.createElement("div");
-                postElement.innerHTML = `<h3>${post.title}</h3><p>${post.content}</p>`;
-                postsContainer.appendChild(postElement);
-            });
-        } catch (error) {
-            console.error("Fehler beim Abrufen der Beiträge:", error);
+        // Beiträge laden
+        async function loadPosts() {
+            try {
+                const querySnapshot = await db.collection("posts").orderBy("timestamp", "desc").get();
+                const postsContainer = document.getElementById("postsContainer");
+                postsContainer.innerHTML = "";
+                querySnapshot.forEach(doc => {
+                    const post = doc.data();
+                    const postElement = document.createElement("div");
+                    postElement.innerHTML = `<h3>${post.title}</h3><p>${post.content}</p>`;
+                    postsContainer.appendChild(postElement);
+                });
+            } catch (error) {
+                console.error("Fehler beim Abrufen der Beiträge:", error);
+            }
         }
-    }
 
-    // FormSubmit-Handler
-    function handleSubmit(event) {
-        event.preventDefault();
-        const title = document.getElementById("postTitle").value;
-        const content = document.getElementById("postContent").value;
-        addPost(title, content);
-        document.getElementById("postForm").reset();
-    }
+        // FormSubmit-Handler
+        function handleSubmit(event) {
+            event.preventDefault();
+            const title = document.getElementById("postTitle").value;
+            const content = document.getElementById("postContent").value;
+            addPost(title, content);
+            document.getElementById("postForm").reset();
+        }
 
-    document.getElementById("postForm").onsubmit = handleSubmit;
+        document.getElementById("postForm").onsubmit = handleSubmit;
 
-    // Beiträge laden beim Start
-    loadPosts();
-</script>
+        // Beiträge laden beim Start
+        loadPosts();
+    </script>
 </body>
 </html>
