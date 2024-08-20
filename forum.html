@@ -4,68 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum</title>
-    <!-- Firebase App (Brauche nur einmal importieren) -->
+    <!-- Firebase App CDN -->
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
+    <!-- Firebase Firestore CDN -->
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js"></script>
-    <!-- Dein eigenes JS -->
-    <script src="forum.js" defer></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+    <script>
+        // Firebase-Konfiguration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC61-c9zrpCTZnERdS8P5BKbV8ghr88BoQ",
+            authDomain: "forum-465da.firebaseapp.com",
+            projectId: "forum-465da",
+            storageBucket: "forum-465da.appspot.com",
+            messagingSenderId: "331107918743",
+            appId: "1:331107918743:web:5680151d1b0a2eb241dad2",
+            measurementId: "G-R0KB59JJEQ"
+        };
+        // Firebase initialisieren
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Funktion zum Abrufen und Anzeigen der Beiträge
+        function getPosts() {
+            db.collection("posts").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // Hier kannst du den Beitrag rendern, z.B. in einem Div anzeigen
+                    const post = document.createElement('div');
+                    post.innerText = `${doc.data().title}: ${doc.data().content}`;
+                    document.getElementById('posts').appendChild(post);
+                });
+            }).catch((error) => {
+                console.error("Fehler beim Abrufen der Beiträge:", error.message);
+            });
         }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
+
+        // Funktion zum Hinzufügen eines neuen Beitrags
+        function addPost(title, content) {
+            db.collection("posts").add({
+                title: title,
+                content: content
+            }).then(() => {
+                console.log("Beitrag erfolgreich hinzugefügt!");
+                getPosts(); // Aktualisiere die Beiträge nach dem Hinzufügen
+            }).catch((error) => {
+                console.error("Fehler beim Hinzufügen des Beitrags:", error.message);
+            });
         }
-        .container {
-            width: 80%;
-            margin: 20px auto;
+
+        // Beiträge beim Laden der Seite abrufen
+        document.addEventListener('DOMContentLoaded', (event) => {
+            getPosts();
+        });
+
+        // Funktion, die aufgerufen wird, wenn der Benutzer einen Beitrag erstellt
+        function handleSubmit(event) {
+            event.preventDefault();
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            addPost(title, content);
         }
-        form {
-            margin-bottom: 20px;
-        }
-        textarea {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #555;
-        }
-        .post {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-    </style>
+    </script>
 </head>
 <body>
-    <header>
-        <h1>Forum</h1>
-    </header>
-    <div class="container">
-        <form id="postForm">
-            <textarea id="postContent" placeholder="Schreibe deinen Beitrag hier..."></textarea>
-            <button type="submit">Beitrag erstellen</button>
-        </form>
-        <div id="postsContainer">
-            <!-- Beiträge werden hier angezeigt -->
-        </div>
+    <h1>Forum</h1>
+    
+    <form onsubmit="handleSubmit(event)">
+        <input type="text" id="title" placeholder="Titel" required>
+        <textarea id="content" placeholder="Inhalt" required></textarea>
+        <button type="submit">Posten</button>
+    </form>
+
+    <div id="posts">
+        <!-- Beiträge werden hier angezeigt -->
     </div>
 </body>
 </html>
