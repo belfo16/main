@@ -7,77 +7,65 @@
     <!-- Firebase App (Brauche nur einmal importieren) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js"></script>
-    <script>
-        // Deine Firebase-Konfiguration
-        const firebaseConfig = {
-            apiKey: "AIzaSyC61-c9zrpCTZnERdS8P5BKbV8ghr88BoQ",
-            authDomain: "forum-465da.firebaseapp.com",
-            projectId: "forum-465da",
-            storageBucket: "forum-465da.appspot.com",
-            messagingSenderId: "331107918743",
-            appId: "1:331107918743:web:5680151d1b0a2eb241dad2"
-        };
-        // Initialisiere Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-    </script>
+    <!-- Dein eigenes JS -->
+    <script src="forum.js" defer></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
         header {
             background-color: #333;
-            color: white;
-            padding: 1em;
+            color: #fff;
+            padding: 10px;
             text-align: center;
         }
-        main {
-            padding: 2em;
+        .container {
+            width: 80%;
+            margin: 20px auto;
         }
         form {
-            margin-bottom: 2em;
+            margin-bottom: 20px;
         }
         textarea {
             width: 100%;
             height: 100px;
-            margin-bottom: 1em;
+            padding: 10px;
+            margin-bottom: 10px;
         }
         button {
-            padding: 0.5em 1em;
-            background-color: #007bff;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
             border: none;
-            color: white;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #555;
         }
         .post {
+            background-color: #fff;
             border: 1px solid #ddd;
-            padding: 1em;
-            margin-bottom: 1em;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Forum</h1>
-        <nav>
-            <a href="index.html">Startseite</a> |
-            <a href="forum.html">Forum</a>
-        </nav>
     </header>
-    <main>
-        <h2>Neuen Beitrag erstellen</h2>
+    <div class="container">
         <form id="postForm">
             <textarea id="postContent" placeholder="Schreibe deinen Beitrag hier..."></textarea>
-            <button type="submit">Posten</button>
+            <button type="submit">Beitrag erstellen</button>
         </form>
-        <h2>Beiträge</h2>
-        <div id="postsContainer"></div>
-    </main>
-    <script src="forum.js"></script>
+        <div id="postsContainer">
+            <!-- Beiträge werden hier angezeigt -->
+        </div>
+    </div>
 </body>
 </html>
