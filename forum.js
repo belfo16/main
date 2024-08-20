@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
             postContent.value = ''; // Formular zurücksetzen
+            displayPosts(); // Beiträge neu laden
         } catch (error) {
             console.error("Fehler beim Erstellen des Beitrags:", error.message);
         }
